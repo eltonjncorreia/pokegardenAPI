@@ -1,0 +1,44 @@
+# --- Planejamento local ---
+PLANO_*
+
+# --- Node / OpenSpec (instalado via npm, não faz parte do projeto Python) ---
+node_modules/
+package.json
+package-lock.json
+
+# --- Python: ambiente virtual ---
+.venv/
+venv/
+env/
+
+# --- Python: caches e artefatos ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# --- Testes / cobertura ---
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# --- Configuração / segredos ---
+.env
+.env.*
+!.env.example
+
+# --- Claude Code: configuração local/pessoal ---
+.claude/settings.local.json
+
+# --- Editor / SO ---
+.idea/
+.vscode/
+*.swp
+.DS_Store
+node_modules/
