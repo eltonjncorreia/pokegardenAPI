@@ -1,0 +1,66 @@
+{
+ "_fixture": "FIXTURE offline do PokéGarden (evals) — não é consulta real à PokéAPI.",
+ "id": 25,
+ "name": "pikachu",
+ "height": 4,
+ "weight": 60,
+ "types": [
+  {
+   "slot": 1,
+   "type": {
+    "name": "electric",
+    "url": "https://pokeapi.co/api/v2/type/electric/"
+   }
+  }
+ ],
+ "abilities": [
+  {
+   "ability": {
+    "name": "static"
+   }
+  },
+  {
+   "ability": {
+    "name": "lightning-rod"
+   }
+  }
+ ],
+ "stats": [
+  {
+   "base_stat": 35,
+   "stat": {
+    "name": "hp"
+   }
+  },
+  {
+   "base_stat": 55,
+   "stat": {
+    "name": "attack"
+   }
+  },
+  {
+   "base_stat": 40,
+   "stat": {
+    "name": "defense"
+   }
+  },
+  {
+   "base_stat": 50,
+   "stat": {
+    "name": "special-attack"
+   }
+  },
+  {
+   "base_stat": 50,
+   "stat": {
+    "name": "special-defense"
+   }
+  },
+  {
+   "base_stat": 90,
+   "stat": {
+    "name": "speed"
+   }
+  }
+ ]
+}

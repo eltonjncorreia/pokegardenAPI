@@ -1,0 +1,5 @@
+{"ts": "2026-10-24T19:40:23.074561+00:00", "event": "chat.start", "request_id": "13d64b8b-5121-4bfc-b6e3-5940e6e896ec", "model": "ScriptedModel", "message_chars": 17}
+{"ts": "2026-10-24T19:40:23.078915+00:00", "event": "discovery.search", "request_id": "13d64b8b-5121-4bfc-b6e3-5940e6e896ec", "query": "pokemon dados", "results": ["get_pokemon", "compare_pokemon", "get_evolution_chain"]}
+{"ts": "2026-10-24T19:40:23.082758+00:00", "event": "discovery.schema", "request_id": "13d64b8b-5121-4bfc-b6e3-5940e6e896ec", "tool": "get_pokemon", "version": "1.0", "result": "ok"}
+{"ts": "2026-10-24T19:40:23.084401+00:00", "event": "chat.failure", "request_id": "13d64b8b-5121-4bfc-b6e3-5940e6e896ec", "error": "MaxTurnsExceeded", "detail": "Max turns (2) exceeded"}
+{"ts": "2026-10-24T19:40:23.084611+00:00", "event": "chat.end", "request_id": "13d64b8b-5121-4bfc-b6e3-5940e6e896ec", "status": "error", "duration_ms": 10, "model": "ScriptedModel", "tools_used": ["search_tools", "get_tool_schema"], "tool_calls": 0, "cache_hits": 0, "cache_misses": 0, "llm_requests": 2, "input_tokens": 0, "output_tokens": 0, "total_tokens": 0}

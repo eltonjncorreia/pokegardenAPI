@@ -1,0 +1,71 @@
+{
+ "_fixture": "FIXTURE offline do PokéGarden (evals) — não é consulta real à PokéAPI.",
+ "id": 133,
+ "name": "eevee",
+ "height": 3,
+ "weight": 65,
+ "types": [
+  {
+   "slot": 1,
+   "type": {
+    "name": "normal",
+    "url": "https://pokeapi.co/api/v2/type/normal/"
+   }
+  }
+ ],
+ "abilities": [
+  {
+   "ability": {
+    "name": "run-away"
+   }
+  },
+  {
+   "ability": {
+    "name": "adaptability"
+   }
+  },
+  {
+   "ability": {
+    "name": "anticipation"
+   }
+  }
+ ],
+ "stats": [
+  {
+   "base_stat": 55,
+   "stat": {
+    "name": "hp"
+   }
+  },
+  {
+   "base_stat": 55,
+   "stat": {
+    "name": "attack"
+   }
+  },
+  {
+   "base_stat": 50,
+   "stat": {
+    "name": "defense"
+   }
+  },
+  {
+   "base_stat": 45,
+   "stat": {
+    "name": "special-attack"
+   }
+  },
+  {
+   "base_stat": 65,
+   "stat": {
+    "name": "special-defense"
+   }
+  },
+  {
+   "base_stat": 55,
+   "stat": {
+    "name": "speed"
+   }
+  }
+ ]
+}

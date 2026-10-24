@@ -1,0 +1,158 @@
+{
+ "_fixture": "FIXTURE offline do PokéGarden (evals) — não é consulta real à PokéAPI.",
+ "id": 67,
+ "chain": {
+  "species": {
+   "name": "eevee"
+  },
+  "evolution_details": [],
+  "evolves_to": [
+   {
+    "species": {
+     "name": "vaporeon"
+    },
+    "evolves_to": [],
+    "evolution_details": [
+     {
+      "trigger": {
+       "name": "use-item"
+      },
+      "item": {
+       "name": "water-stone"
+      },
+      "min_happiness": null,
+      "time_of_day": "",
+      "min_level": null
+     }
+    ]
+   },
+   {
+    "species": {
+     "name": "jolteon"
+    },
+    "evolves_to": [],
+    "evolution_details": [
+     {
+      "trigger": {
+       "name": "use-item"
+      },
+      "item": {
+       "name": "thunder-stone"
+      },
+      "min_happiness": null,
+      "time_of_day": "",
+      "min_level": null
+     }
+    ]
+   },
+   {
+    "species": {
+     "name": "flareon"
+    },
+    "evolves_to": [],
+    "evolution_details": [
+     {
+      "trigger": {
+       "name": "use-item"
+      },
+      "item": {
+       "name": "fire-stone"
+      },
+      "min_happiness": null,
+      "time_of_day": "",
+      "min_level": null
+     }
+    ]
+   },
+   {
+    "species": {
+     "name": "espeon"
+    },
+    "evolves_to": [],
+    "evolution_details": [
+     {
+      "trigger": {
+       "name": "level-up"
+      },
+      "item": null,
+      "min_happiness": 160,
+      "time_of_day": "day",
+      "min_level": null
+     }
+    ]
+   },
+   {
+    "species": {
+     "name": "umbreon"
+    },
+    "evolves_to": [],
+    "evolution_details": [
+     {
+      "trigger": {
+       "name": "level-up"
+      },
+      "item": null,
+      "min_happiness": 160,
+      "time_of_day": "night",
+      "min_level": null
+     }
+    ]
+   },
+   {
+    "species": {
+     "name": "leafeon"
+    },
+    "evolves_to": [],
+    "evolution_details": [
+     {
+      "trigger": {
+       "name": "use-item"
+      },
+      "item": {
+       "name": "leaf-stone"
+      },
+      "min_happiness": null,
+      "time_of_day": "",
+      "min_level": null
+     }
+    ]
+   },
+   {
+    "species": {
+     "name": "glaceon"
+    },
+    "evolves_to": [],
+    "evolution_details": [
+     {
+      "trigger": {
+       "name": "use-item"
+      },
+      "item": {
+       "name": "ice-stone"
+      },
+      "min_happiness": null,
+      "time_of_day": "",
+      "min_level": null
+     }
+    ]
+   },
+   {
+    "species": {
+     "name": "sylveon"
+    },
+    "evolves_to": [],
+    "evolution_details": [
+     {
+      "trigger": {
+       "name": "level-up"
+      },
+      "item": null,
+      "min_happiness": 160,
+      "time_of_day": "",
+      "min_level": null
+     }
+    ]
+   }
+  ]
+ }
+}

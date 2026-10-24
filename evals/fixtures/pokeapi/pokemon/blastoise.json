@@ -1,0 +1,66 @@
+{
+ "_fixture": "FIXTURE offline do PokéGarden (evals) — não é consulta real à PokéAPI.",
+ "id": 9,
+ "name": "blastoise",
+ "height": 16,
+ "weight": 855,
+ "types": [
+  {
+   "slot": 1,
+   "type": {
+    "name": "water",
+    "url": "https://pokeapi.co/api/v2/type/water/"
+   }
+  }
+ ],
+ "abilities": [
+  {
+   "ability": {
+    "name": "torrent"
+   }
+  },
+  {
+   "ability": {
+    "name": "rain-dish"
+   }
+  }
+ ],
+ "stats": [
+  {
+   "base_stat": 79,
+   "stat": {
+    "name": "hp"
+   }
+  },
+  {
+   "base_stat": 83,
+   "stat": {
+    "name": "attack"
+   }
+  },
+  {
+   "base_stat": 100,
+   "stat": {
+    "name": "defense"
+   }
+  },
+  {
+   "base_stat": 85,
+   "stat": {
+    "name": "special-attack"
+   }
+  },
+  {
+   "base_stat": 105,
+   "stat": {
+    "name": "special-defense"
+   }
+  },
+  {
+   "base_stat": 78,
+   "stat": {
+    "name": "speed"
+   }
+  }
+ ]
+}

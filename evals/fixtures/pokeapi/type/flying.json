@@ -1,0 +1,43 @@
+{
+ "_fixture": "FIXTURE offline do PokéGarden (evals) — não é consulta real à PokéAPI.",
+ "name": "flying",
+ "damage_relations": {
+  "double_damage_from": [
+   {
+    "name": "electric",
+    "url": "https://pokeapi.co/api/v2/type/electric/"
+   },
+   {
+    "name": "ice",
+    "url": "https://pokeapi.co/api/v2/type/ice/"
+   },
+   {
+    "name": "rock",
+    "url": "https://pokeapi.co/api/v2/type/rock/"
+   }
+  ],
+  "half_damage_from": [
+   {
+    "name": "grass",
+    "url": "https://pokeapi.co/api/v2/type/grass/"
+   },
+   {
+    "name": "fighting",
+    "url": "https://pokeapi.co/api/v2/type/fighting/"
+   },
+   {
+    "name": "bug",
+    "url": "https://pokeapi.co/api/v2/type/bug/"
+   }
+  ],
+  "no_damage_from": [
+   {
+    "name": "ground",
+    "url": "https://pokeapi.co/api/v2/type/ground/"
+   }
+  ],
+  "double_damage_to": [],
+  "half_damage_to": [],
+  "no_damage_to": []
+ }
+}

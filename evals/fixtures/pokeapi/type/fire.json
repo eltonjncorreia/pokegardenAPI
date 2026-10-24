@@ -1,0 +1,50 @@
+{
+ "_fixture": "FIXTURE offline do PokéGarden (evals) — não é consulta real à PokéAPI.",
+ "name": "fire",
+ "damage_relations": {
+  "double_damage_from": [
+   {
+    "name": "water",
+    "url": "https://pokeapi.co/api/v2/type/water/"
+   },
+   {
+    "name": "ground",
+    "url": "https://pokeapi.co/api/v2/type/ground/"
+   },
+   {
+    "name": "rock",
+    "url": "https://pokeapi.co/api/v2/type/rock/"
+   }
+  ],
+  "half_damage_from": [
+   {
+    "name": "fire",
+    "url": "https://pokeapi.co/api/v2/type/fire/"
+   },
+   {
+    "name": "grass",
+    "url": "https://pokeapi.co/api/v2/type/grass/"
+   },
+   {
+    "name": "ice",
+    "url": "https://pokeapi.co/api/v2/type/ice/"
+   },
+   {
+    "name": "bug",
+    "url": "https://pokeapi.co/api/v2/type/bug/"
+   },
+   {
+    "name": "steel",
+    "url": "https://pokeapi.co/api/v2/type/steel/"
+   },
+   {
+    "name": "fairy",
+    "url": "https://pokeapi.co/api/v2/type/fairy/"
+   }
+  ],
+  "no_damage_from": [],
+  "double_damage_to": [],
+  "half_damage_to": [],
+  "no_damage_to": []
+ }
+}

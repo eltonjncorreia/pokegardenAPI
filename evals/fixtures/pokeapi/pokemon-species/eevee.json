@@ -1,0 +1,8 @@
+{
+ "_fixture": "FIXTURE offline do PokéGarden (evals) — não é consulta real à PokéAPI.",
+ "id": 133,
+ "name": "eevee",
+ "evolution_chain": {
+  "url": "https://pokeapi.co/api/v2/evolution-chain/67/"
+ }
+}
