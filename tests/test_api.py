@@ -123,6 +123,7 @@ def test_tools_list_deterministic_no_llm(monkeypatch):
     assert r1.status_code == 200
     assert r1.json() == r2.json()  # determinístico
     assert calls["list"] == 2
+    assert r1.headers["cache-control"] == f"public, max-age={main_module.settings.tools_cache_max_age_seconds}"
 
 
 def test_tools_search_query(monkeypatch):
@@ -132,6 +133,7 @@ def test_tools_search_query(monkeypatch):
     )
     resp = client.get("/tools", params={"query": "pokemon"})
     assert resp.status_code == 200
+    assert "max-age=" in resp.headers["cache-control"]
     assert resp.json()[0]["name"] == "get_pokemon"
 
 
@@ -143,6 +145,7 @@ def test_tool_schema_found(monkeypatch):
     resp = client.get("/tools/get_pokemon")
     assert resp.status_code == 200
     assert resp.json()["name"] == "get_pokemon"
+    assert "max-age=" in resp.headers["cache-control"]
 
 
 def test_tool_schema_missing_404(monkeypatch):
@@ -152,6 +155,11 @@ def test_tool_schema_missing_404(monkeypatch):
     monkeypatch.setattr(main_module.catalog, "get_tool_schema", raise_missing)
     resp = client.get("/tools/nope")
     assert resp.status_code == 404
+    assert "cache-control" not in resp.headers
+
+
+def test_health_not_cached():
+    assert "cache-control" not in client.get("/health").headers
 
 
 # ---------------------------------------------------------------------------

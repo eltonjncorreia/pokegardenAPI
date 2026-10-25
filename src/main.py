@@ -5,10 +5,11 @@ Camada puramente HTTP: valida a entrada, chama ``agent.run_chat`` e mapeia o
 nem o cliente da PokéAPI — toda a orquestração vive em ``pokegarden.agent``.
 
 As rotas ``GET /tools`` e ``GET /tools/{name}`` são determinísticas: leem o
-catálogo diretamente, sem LLM e sem consumir tokens.
+catálogo diretamente, sem LLM e sem consumir tokens. Como o catálogo só muda
+em deploy/troca de perfil, elas enviam ``Cache-Control: max-age``.
 """
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Response
 from fastapi.responses import JSONResponse
 
 import agent, catalog
@@ -39,24 +40,33 @@ def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
+def _set_tools_cache_headers(response: Response) -> None:
+    """Permite cache do catálogo pelo cliente/proxies (só respostas de sucesso)."""
+    response.headers["Cache-Control"] = f"public, max-age={settings.tools_cache_max_age_seconds}"
+
+
 @app.get("/tools")
-def list_tools(query: str | None = Query(default=None)) -> list[dict]:
+def list_tools(response: Response, query: str | None = Query(default=None)) -> list[dict]:
     """Lista ou pesquisa tools habilitadas (determinístico, sem LLM, sem tokens)."""
+    _set_tools_cache_headers(response)
     if query:
         return catalog.search_tools(query)
     return catalog.list_enabled()
 
 
 @app.get("/tools/{name}")
-def tool_schema(name: str) -> dict:
+def tool_schema(name: str, response: Response) -> dict:
     """Retorna o contrato de uma tool habilitada (determinístico, sem LLM).
 
-    Tool inexistente ou desabilitada resulta em HTTP 404 documentado.
+    Tool inexistente ou desabilitada resulta em HTTP 404 documentado, sem
+    ``Cache-Control`` (o header só vale para a resposta de sucesso).
     """
     try:
-        return catalog.get_tool_schema(name)
+        schema = catalog.get_tool_schema(name)
     except (catalog.ToolNotFound, catalog.ToolDisabled):
         raise HTTPException(status_code=404, detail=f"Tool '{name}' não encontrada ou desabilitada.")
+    _set_tools_cache_headers(response)
+    return schema
 
 
 @app.post(

@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     pokeapi_base_url: str = "https://pokeapi.co/api/v2"
     cache_dir: str = ".cache"
     cache_ttl_seconds: int = 86400
+    tools_cache_max_age_seconds: int = 3600  # Cache-Control das rotas /tools
     openai_model: str = "gpt-4o-mini"
     openai_api_key: str = ""
     log_level: str = "INFO"
