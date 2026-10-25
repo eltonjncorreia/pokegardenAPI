@@ -110,7 +110,7 @@ POST /chat {"message"}
 
 | Método | Rota               | Descrição                                                        |
 | ------ | ------------------ | ---------------------------------------------------------------- |
-| `POST` | `/chat`            | Pergunta em linguagem natural; responde `request_id`, `status`, `answer`, `sources`, `tools_used`, `warnings`. |
+| `POST` | `/chat`            | Pergunta em linguagem natural; responde `request_id`, `status`, `answer`, `sources`, `tools_used`, `warnings`; em `404`/`500` responde `NotFoundError`/`InternalServerError` (`status`, `detail`, `request_id`). |
 | `GET`  | `/tools?query=...` | Lista/busca determinística das tools **habilitadas**.            |
 | `GET`  | `/tools/{name}`    | Contrato (`input_schema`/`output_schema`) da tool, ou `404` se ausente/desabilitada. |
 | `GET`  | `/health`          | Health check (inalterado).                                       |

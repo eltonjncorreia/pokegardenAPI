@@ -55,7 +55,7 @@ def test_chat_not_found_404(monkeypatch):
     _patch_run_chat(monkeypatch, Result("r", "not_found", "Não existe esse Pokémon."))
     resp = client.post("/chat", json={"message": "tipos do Pokemon xyz"})
     assert resp.status_code == 404
-    assert resp.json()["status"] == "not_found"
+    assert resp.json() == {"status": "not_found", "detail": "Não existe esse Pokémon.", "request_id": "r"}
 
 
 def test_chat_unsupported_422(monkeypatch):
@@ -69,7 +69,7 @@ def test_chat_error_never_false_200(monkeypatch):
     _patch_run_chat(monkeypatch, Result("r", "error", "Falha interna."))
     resp = client.post("/chat", json={"message": "oi"})
     assert resp.status_code == 500
-    assert resp.json()["status"] == "error"
+    assert resp.json() == {"status": "error", "detail": "Falha interna.", "request_id": "r"}
 
 
 def test_chat_partial_200_with_warnings(monkeypatch):
@@ -140,7 +140,8 @@ def test_tools_search_query(monkeypatch):
 def test_tool_schema_found(monkeypatch):
     monkeypatch.setattr(
         main_module.catalog, "get_tool_schema",
-        lambda name: {"name": name, "parameters": {"name": "str"}},
+        lambda name: {"name": name, "description": "Dados de um Pokémon",
+                      "input_schema": {"type": "object", "properties": {"name_or_id": {"type": "string"}}}},
     )
     resp = client.get("/tools/get_pokemon")
     assert resp.status_code == 200
@@ -155,7 +156,18 @@ def test_tool_schema_missing_404(monkeypatch):
     monkeypatch.setattr(main_module.catalog, "get_tool_schema", raise_missing)
     resp = client.get("/tools/nope")
     assert resp.status_code == 404
+    assert resp.json() == {"status": "not_found", "detail": "Tool 'nope' não encontrada ou desabilitada."}
     assert "cache-control" not in resp.headers
+
+
+def test_unhandled_error_returns_documented_500(monkeypatch):
+    def boom():
+        raise RuntimeError("segredo interno")
+
+    monkeypatch.setattr(main_module.catalog, "list_enabled", boom)
+    resp = TestClient(main_module.app, raise_server_exceptions=False).get("/tools")
+    assert resp.status_code == 500
+    assert resp.json() == {"status": "error", "detail": "Erro interno inesperado."}
 
 
 def test_health_not_cached():

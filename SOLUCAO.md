@@ -49,8 +49,10 @@ curl http://localhost:8000/tools/get_pokemon
 ```
 
 A resposta de `/chat` traz `request_id`, `status` (`ok` | `partial` |
-`not_found` | `unsupported` | `error`), `answer`, `sources`, `tools_used` e
-`warnings`. Falhas nunca retornam `200` de falso sucesso.
+`unsupported`), `answer`, `sources`, `tools_used` e `warnings`. Os erros `404`
+(`status: not_found`) e `500` (`status: error`) usam os schemas `NotFoundError`
+e `InternalServerError` (`status`, `detail`, `request_id`), os mesmos de
+`/tools/{name}`. Falhas nunca retornam `200` de falso sucesso.
 
 ## Logs e cache
 
