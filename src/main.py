@@ -57,6 +57,31 @@ _STATUS_HTTP = {
     "error": 500,
 }
 
+# Status de erro respondem com o schema de erro específico, não com o envelope do chat.
+_STATUS_ERROR = {
+    "not_found": NotFoundError,
+    "error": InternalServerError,
+}
+
+
+def _chat_response(result: agent.Result) -> JSONResponse:
+    """Converte o ``Result`` do agente na resposta HTTP do seu ``status``."""
+    http_status = _STATUS_HTTP.get(result.status, 500)
+
+    error_model = _STATUS_ERROR.get(result.status)
+    if error_model is not None:
+        return _error_response(http_status, error_model(detail=result.answer, request_id=result.request_id))
+
+    body = ChatResponse(
+        request_id=result.request_id,
+        status=result.status,
+        answer=result.answer,
+        sources=result.sources,
+        tools_used=result.tools_used,
+        warnings=result.warnings,
+    )
+    return JSONResponse(status_code=http_status, content=body.model_dump())
+
 
 @app.get("/health", response_model=HealthResponse)
 def health() -> dict[str, str]:
@@ -123,19 +148,4 @@ def chat(request: ChatRequest) -> JSONResponse:
             detail=f"message excede o tamanho máximo de {settings.max_message_chars} caracteres.",
         )
 
-    result = agent.run_chat(request.message)
-    http_status = _STATUS_HTTP.get(result.status, 500)
-    if http_status == 404:
-        return _error_response(404, NotFoundError(detail=result.answer, request_id=result.request_id))
-    if http_status >= 500:
-        return _error_response(http_status, InternalServerError(detail=result.answer, request_id=result.request_id))
-
-    body = ChatResponse(
-        request_id=result.request_id,
-        status=result.status,
-        answer=result.answer,
-        sources=result.sources,
-        tools_used=result.tools_used,
-        warnings=result.warnings,
-    )
-    return JSONResponse(status_code=http_status, content=body.model_dump())
+    return _chat_response(agent.run_chat(request.message))
