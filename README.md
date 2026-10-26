@@ -16,15 +16,43 @@ Assistente Pokémon construído com **OpenAI Agents SDK** + **PokéAPI**, seguin
 
 ---
 
-## 🚀 Configuração
+## 🚀 Início rápido (primeira execução)
+
+Um único comando prepara tudo e sobe o servidor:
+
+```bash
+make setup
+```
+
+Ele executa, em ordem:
+
+1. **Cria o ambiente virtual** `.venv` com `python3.12` (pule se já existir);
+2. **Instala as dependências** de `requirements.txt` dentro do `.venv`;
+3. **Gera o `.env`** copiando o `.env.example` (um `.env` existente nunca é sobrescrito);
+4. **Roda a suíte de testes** (offline; se algum teste falhar, o servidor não sobe);
+5. **Sobe o servidor** FastAPI em <http://localhost:8000>.
+
+> O `make` usa os binários do `.venv` diretamente (`.venv/bin/pytest`,
+> `.venv/bin/uvicorn`), então não é preciso ativar o ambiente antes.
+> Para usá-lo no seu terminal: `source .venv/bin/activate`.
+
+As rotas `/health` e `/tools` funcionam logo de cara. Para o `POST /chat`
+(agente), preencha a `OPENAI_API_KEY` no `.env` gerado e rode `make run`.
+
+Se o `python3.12` não estiver no `PATH`, aponte outro interpretador 3.12:
+
+```bash
+make setup PYTHON=/caminho/para/python3.12
+```
+
+### Configuração manual (sem `make`)
 
 ```bash
 # 1. Garantir o Python 3.12 (pyenv lê o .python-version automaticamente)
-pyenv install -s 3.12
-pyenv local 3.12.10
+pyenv install -s 3.12.10
 
 # 2. Criar e ativar o ambiente virtual
-python -m venv .venv
+python3.12 -m venv .venv
 source .venv/bin/activate
 
 # 3. Instalar as dependências
@@ -32,7 +60,11 @@ pip install -r requirements.txt
 
 # 4. Configurar as variáveis de ambiente
 cp .env.example .env
-# edite o .env e preencha OPENAI_API_KEY
+# edite o .env e preencha OPENAI_API_KEY (necessária só para o /chat)
+
+# 5. Rodar os testes e subir o servidor
+pytest
+uvicorn --app-dir src main:app --reload
 ```
 
 ### Variáveis de ambiente (`.env`)
@@ -44,7 +76,9 @@ cp .env.example .env
 | `POKEAPI_BASE_URL`   | URL base da PokéAPI                          | `https://pokeapi.co/api/v2` |
 | `CACHE_DIR`          | Diretório de cache local                     | `.cache`                    |
 | `CACHE_TTL_SECONDS`  | Expiração (s) das entradas de cache          | `86400`                     |
+| `TOOLS_CACHE_MAX_AGE_SECONDS` | `max-age` (s) do `Cache-Control` das rotas `/tools` | `3600`      |
 | `LOG_LEVEL`          | Nível de log (`DEBUG`/`INFO`/`WARNING`)      | `INFO`                      |
+| `LOG_FILE`           | Arquivo de logs JSON (vazio = só stderr)     | `logs/pokegarden.jsonl`     |
 | `POKEGARDEN_TOOLS_PROFILE` | Perfil de tools: `B` = todas; `A` = sem `get_evolution_chain` | `B`        |
 
 ---
@@ -54,12 +88,17 @@ cp .env.example .env
 Com o `Makefile` (limpa caches `__pycache__`/pytest antes de rodar):
 
 ```bash
-make run     # sobe o servidor FastAPI (http://localhost:8000)
-make test    # roda a suíte de testes
-make clean   # remove caches do Python e de testes
+make setup      # primeira execução: venv + dependências + .env + testes + servidor
+make install    # cria o .venv e instala as dependências (refaz se requirements.txt mudar)
+make env        # cria o .env a partir do .env.example (se ainda não existir)
+make run        # sobe o servidor FastAPI (http://localhost:8000)
+make test       # roda a suíte de testes
+make eval       # avaliação offline do agente (relatório em evidence/evals/)
+make eval-live  # avaliação com o modelo e a PokéAPI reais (requer OPENAI_API_KEY)
+make clean      # remove caches do Python e de testes
 ```
 
-Ou manualmente:
+Ou manualmente, com o `.venv` ativado:
 
 ```bash
 uvicorn --app-dir src main:app --reload
@@ -164,7 +203,12 @@ Não precisam de internet nem de `OPENAI_API_KEY`: a PokéAPI e o modelo são
 simulados com fakes/monkeypatch, e o cache usa um diretório temporário.
 
 ```bash
-make test                 # limpa caches e roda tudo
+make test                 # limpa caches e roda tudo (cria o .venv se preciso)
+```
+
+Ou, com o `.venv` ativado (`source .venv/bin/activate`):
+
+```bash
 pytest -q                 # equivalente, sem limpar caches
 pytest --cov=src --cov-report=term-missing   # com cobertura
 ```

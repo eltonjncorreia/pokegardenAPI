@@ -1,8 +1,11 @@
-.PHONY: install test eval eval-live run clean
+.PHONY: setup install env test eval eval-live run clean
 
 PYTHON ?= python3.12
 VENV := .venv/bin
 STAMP := .venv/.installed
+
+## setup: primeira execução — cria o .venv, instala as dependências, gera o .env, roda os testes e sobe o servidor
+setup: install env test run
 
 ## install: cria o .venv e instala as dependências (refaz se requirements.txt mudar)
 install: $(STAMP)
@@ -12,6 +15,12 @@ $(STAMP): requirements.txt
 	$(VENV)/pip install --upgrade pip
 	$(VENV)/pip install -r requirements.txt
 	touch $(STAMP)
+
+## env: copia o .env.example para .env (não sobrescreve um .env existente)
+env: .env
+
+.env:
+	cp .env.example .env
 
 ## clean: remove caches do Python e de testes
 clean:
@@ -31,6 +40,6 @@ eval: install clean
 eval-live: install clean
 	$(VENV)/python -m evals.run --mode live
 
-## run: cria o .venv, instala as dependências e sobe o servidor FastAPI
-run: install clean
+## run: cria o .venv, instala as dependências, gera o .env e sobe o servidor FastAPI
+run: install env clean
 	$(VENV)/uvicorn --app-dir src main:app --reload
